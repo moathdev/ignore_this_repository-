@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tap Checkout example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+</head>
+<body>
+<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"></script>
+<h2>Tap Checkout example</h2>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <div class="row">
+                <div class="col-50">
+                    <h3>Billing Address</h3>
+                    <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                    <input type="text" id="email" name="email" placeholder="john@example.com">
+                    <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                    <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                    <label for="city"><i class="fa fa-institution"></i> City</label>
+                    <input type="text" id="city" name="city" placeholder="New York">
+
+                    <div class="row">
+                        <div class="col-50">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" placeholder="NY">
+                        </div>
+                        <div class="col-50">
+                            <label for="zip">Zip</label>
+                            <input type="text" id="zip" name="zip" placeholder="10001">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label>
+                <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+            </label>
+            <div id="root"></div>
+            <button class="btn" id="openLightBox" onclick="goSell.openLightBox()">Pay Now</button>
+        </div>
+    </div>
+    <div class="col-25">
+        <div class="container">
+            <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
+            <p><a href="#">Product 1</a> <span class="price">$15</span></p>
+            <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+            <p><a href="#">Product 3</a> <span class="price">$8</span></p>
+            <p><a href="#">Product 4</a> <span class="price">$2</span></p>
+            <hr>
+            <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    goSell.config({
+        containerID:"root",
+        gateway:{
+            publicKey:"pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
+            language:"en",
+            contactInfo:true,
+            supportedCurrencies:"all",
+            supportedPaymentMethods: "all",
+            saveCardOption:false,
+            customerCards: true,
+            notifications:'standard',
+            callback:(response) => {
+                console.log('response', response);
+            },
+            onClose: () => {
+
+                console.log("onClose Eventxxx");
+                window.location.replace("/redirect.html");
+
+            },
+            backgroundImg: {
+                url: 'imgURL',
+                opacity: '0.5'
+            },
+            labels:{
+                cardNumber:"Card Number",
+                expirationDate:"MM/YY",
+                cvv:"CVV",
+                cardHolder:"Name on Card",
+                actionButton:"Pay"
+            },
+            style: {
+                base: {
+                    color: '#535353',
+                    lineHeight: '18px',
+                    fontFamily: 'sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: 'rgba(0, 0, 0, 0.26)',
+                        fontSize:'15px'
+                    }
+                },
+                invalid: {
+                    color: 'red',
+                    iconColor: '#fa755a '
+                }
+            }
+        },
+        customer:{
+            id:"cus_m1QB0320181401l1LD1812485",
+            first_name: "First Name",
+            middle_name: "Middle Name",
+            last_name: "Last Name",
+            email: "demo@email.com",
+            phone: {
+                country_code: "965",
+                number: "99999999"
+            }
+        },
+        order:{
+            amount: 100,
+            currency:"KWD",
+            items:[{
+                id:1,
+                name:'item1',
+                description: 'item1 desc',
+                quantity:'x1',
+                amount_per_unit:'KD00.000',
+                discount: {
+                    type: 'P',
+                    value: '10%'
+                },
+                total_amount: 'KD000.000'
+            },
+                {
+                    id:2,
+                    name:'item2',
+                    description: 'item2 desc',
+                    quantity:'x2',
+                    amount_per_unit:'KD00.000',
+                    discount: {
+                        type: 'P',
+                        value: '10%'
+                    },
+                    total_amount: 'KD000.000'
+                },
+                {
+                    id:3,
+                    name:'item3',
+                    description: 'item3 desc',
+                    quantity:'x1',
+                    amount_per_unit:'KD00.000',
+                    discount: {
+                        type: 'P',
+                        value: '10%'
+                    },
+                    total_amount: 'KD000.000'
+                }],
+            shipping:null,
+            taxes: null
+        },
+        transaction:{
+            mode: 'charge',
+            charge:{
+                saveCard: false,
+                threeDSecure: true,
+                description: "Test Description",
+                statement_descriptor: "Sample",
+                reference:{
+                    transaction: "txn_0001",
+                    order: "ord_0001"
+                },
+                metadata:{},
+                receipt:{
+                    email: false,
+                    sms: true
+                },
+                redirect: "http://localhost:63342/untitled1/redirect.html?_ijt=39rqg32213825umrbie7ckr0en&_ij_reload=RELOAD_ON_SAVE",
+                post: null,
+            }
+        }
+    });
+</script>
+</body>
+</html>
