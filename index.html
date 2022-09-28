@@ -4,8 +4,8 @@
     <title>Tap Checkout example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css" rel="stylesheet" />
-    <link href="/style.css" rel="stylesheet" />
+    <link href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css" rel="stylesheet"/>
+    <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
 <script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"></script>
@@ -41,7 +41,10 @@
                 <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
             </label>
             <div id="root"></div>
-            <button class="btn" id="openLightBox" onclick="goSell.openLightBox()">Pay Now</button>
+            <button class="btn" id="openLightBox" onclick="goSell.openLightBox()">Pay Now with JsCheckout [POP-UP]
+            </button>
+            <button class="btn" id="openPaymentPage" onclick="goSell.openPaymentPage()">Pay Now JsCheckout [redirect]
+            </button>
         </div>
     </div>
     <div class="col-25">
@@ -59,17 +62,17 @@
 
 <script>
     goSell.config({
-        containerID:"root",
-        gateway:{
-            publicKey:"pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
-            language:"en",
-            contactInfo:true,
-            supportedCurrencies:"all",
+        containerID: "root",
+        gateway: {
+            publicKey: "pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
+            language: "en",
+            contactInfo: true,
+            supportedCurrencies: "all",
             supportedPaymentMethods: "all",
-            saveCardOption:false,
+            saveCardOption: false,
             customerCards: true,
-            notifications:'standard',
-            callback:(response) => {
+            notifications: 'standard',
+            callback: (response) => {
                 console.log('response', response);
             },
             onClose: () => {
@@ -82,12 +85,12 @@
                 url: 'imgURL',
                 opacity: '0.5'
             },
-            labels:{
-                cardNumber:"Card Number",
-                expirationDate:"MM/YY",
-                cvv:"CVV",
-                cardHolder:"Name on Card",
-                actionButton:"Pay"
+            labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay"
             },
             style: {
                 base: {
@@ -98,7 +101,7 @@
                     fontSize: '16px',
                     '::placeholder': {
                         color: 'rgba(0, 0, 0, 0.26)',
-                        fontSize:'15px'
+                        fontSize: '15px'
                     }
                 },
                 invalid: {
@@ -107,8 +110,7 @@
                 }
             }
         },
-        customer:{
-            id:"cus_m1QB0320181401l1LD1812485",
+        customer: {
             first_name: "First Name",
             middle_name: "Middle Name",
             last_name: "Last Name",
@@ -118,61 +120,26 @@
                 number: "99999999"
             }
         },
-        order:{
+        order: {
             amount: 100,
-            currency:"KWD",
-            items:[{
-                id:1,
-                name:'item1',
-                description: 'item1 desc',
-                quantity:'x1',
-                amount_per_unit:'KD00.000',
-                discount: {
-                    type: 'P',
-                    value: '10%'
-                },
-                total_amount: 'KD000.000'
-            },
-                {
-                    id:2,
-                    name:'item2',
-                    description: 'item2 desc',
-                    quantity:'x2',
-                    amount_per_unit:'KD00.000',
-                    discount: {
-                        type: 'P',
-                        value: '10%'
-                    },
-                    total_amount: 'KD000.000'
-                },
-                {
-                    id:3,
-                    name:'item3',
-                    description: 'item3 desc',
-                    quantity:'x1',
-                    amount_per_unit:'KD00.000',
-                    discount: {
-                        type: 'P',
-                        value: '10%'
-                    },
-                    total_amount: 'KD000.000'
-                }],
-            shipping:null,
+            currency: "SAR",
+            items: null,
+            shipping: null,
             taxes: null
         },
-        transaction:{
+        transaction: {
             mode: 'charge',
-            charge:{
+            charge: {
                 saveCard: false,
                 threeDSecure: true,
                 description: "Test Description",
                 statement_descriptor: "Sample",
-                reference:{
+                reference: {
                     transaction: "txn_0001",
                     order: "ord_0001"
                 },
-                metadata:{},
-                receipt:{
+                metadata: {},
+                receipt: {
                     email: false,
                     sms: true
                 },
